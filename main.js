@@ -4,7 +4,39 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+const heartChange = {
+  '♡': '♥',
+  '♥': '♡'
+}
 
+// const toggleHide = () => document.querySelector("#modal").classList.toggle("hidden")
+
+const heartIcons = document.querySelectorAll(".like-glyph")
+heartIcons.forEach(icon => {
+  icon.addEventListener("click", () => {
+    if (icon.textContent === EMPTY_HEART) {
+
+      mimicServerCall()
+      .then(response => {
+        document.querySelector("#modal").classList.remove("hidden")
+        setTimeout(() => {document.querySelector("#modal").classList.add("hidden")}, 3000)
+
+        if (response==="Pretend remote server notified of action!") {
+          
+          icon.textContent = heartChange[icon.textContent]
+          icon.classList.add("activated-heart")
+        }
+      })
+      .catch(() => {document.querySelector("#modal").classList.remove("hidden")})
+    }
+    else {
+      icon.textContent = heartChange[icon.textContent]
+      icon.classList.remove("activated-heart")
+    }
+  }
+
+  )
+})
 
 
 //------------------------------------------------------------------------------
